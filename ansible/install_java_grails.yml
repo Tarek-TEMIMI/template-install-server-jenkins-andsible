@@ -1,0 +1,30 @@
+---
+- name: Installer Java et Grails
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Installer OpenJDK 8
+      apt:
+        name: openjdk-8-jdk
+        state: present
+
+    - name: Installer SDKMAN
+      shell: "curl -s https://get.sdkman.io | bash"
+      args:
+        executable: /bin/bash
+      environment:
+        SDKMAN_CANDIDATES_API: "https://api.sdkman.io/2"
+
+    - name: Source SDKMAN
+      shell: "source $HOME/.sdkman/bin/sdkman-init.sh"
+      args:
+        executable: /bin/bash
+
+    - name: Installer Grails 3.2.13
+      shell: "sdk install grails 3.2.13"
+      args:
+        executable: /bin/bash
+
+    - name: Vérifier l'installation de Grails
+      command: grails -version

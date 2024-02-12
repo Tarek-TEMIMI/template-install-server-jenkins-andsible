@@ -1,0 +1,26 @@
+---
+- name: Déployer l'application
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Copier le fichier JAR
+      copy:
+        src: /path/to/your/app.jar
+        dest: /home/favizone/resources/upgrade/favizone/favizone.jar
+        mode: "0644"
+
+    - name: Sauvegarder la version précédente
+      command: "cp /home/favizone/resources/upgrade/favizone/favizone.jar /home/favizone/resources/upgrade/favizone/favizone-backup.jar"
+
+    - name: Arrêter l'application web
+      command: "service favizone-webapp-service stop"
+
+    - name: Remplacer le fichier JAR
+      command: "mv /home/favizone/resources/upgrade/favizone/favizone.jar /home/favizone/resources/upgrade/favizone/favizone-date.jar"
+
+    - name: Extraire le contenu du nouveau JAR
+      command: "cd /home/favizone/resources/upgrade/favizone/ && rm -r * && jar xf /home/favizone/resources/upgrade/favizone/favizone-date.jar"
+
+    - name: Démarrer l'application web
+      command: "service favizone-webapp-service start"

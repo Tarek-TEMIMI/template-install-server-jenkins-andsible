@@ -1,0 +1,40 @@
+---
+- name: Préparer le serveur
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Installer Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Autoriser le trafic HTTP via UFW
+      ufw:
+        rule: allow
+        port: "80"
+        app: "Nginx HTTP"
+
+    - name: Créer le fichier de configuration Nginx
+      template:
+        src: templates/app.favizone.com
+        dest: /etc/nginx/sites-available/app.favizone.com
+
+    - name: Activer le site Nginx
+      file:
+        src: /etc/nginx/sites-available/app.favizone.com
+        dest: /etc/nginx/sites-enabled/app.favizone.com
+        state: link
+
+    - name: Configurer le fichier Nginx principal
+      template:
+        src: templates/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted
