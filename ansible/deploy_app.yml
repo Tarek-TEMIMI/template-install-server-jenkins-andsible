@@ -1,8 +1,10 @@
 ---
 - name: Déployer l'application
-  hosts: stage_dev
-  become: true
-
+  - hosts: serv_dev
+  gather_facts: true
+  vars:
+    ansible_ssh_user: "{{ ansible_ssh_user }}"  # Référencez la variable d'utilisateur SSH
+    ansible_ssh_host: "{{ ansible_ssh_host }}"  # Référencez la variable d'adresse IP
   tasks:
     - name: Copier le fichier JAR
       copy:
