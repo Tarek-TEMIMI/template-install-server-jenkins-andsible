@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+  
+
+    stages {
+        stage('Récupérer les fichiers Ansible') {
+            steps {
+                git branch: 'main', credentialsId: GIT_CREDENTIALS, url: GIT_REPO_URL
+            }
+        }
+
+        stage('Préparer, Installer et Déployer - Dev') {
+            steps {
+                preparerInstallerDeployer('Dev')
+            }
+        }
+
+        stage('Préparer, Installer et Déployer - Test') {
+            steps {
+                preparerInstallerDeployer('Test')
+            }
+        }
+
+        stage('Préparer, Installer et Déployer - Prod') {
+            steps {
+                preparerInstallerDeployer('Prod')
+            }
+        }
+
+        // Répétez les étapes pour d'autres environnements au besoin
+    }
+}
+
+def preparerInstallerDeployer(env) {
+    ansiblePlaybook(
+        playbook: 'ansible/prepare_server.yml',
+        inventory: "ansible/inventory/inventory_${env.toLowerCase()}.ini"
+    )
+
+    ansiblePlaybook(
+        playbook: 'ansible/install_java_grails.yml',
+        inventory: "ansible/inventory/inventory_${env.toLowerCase()}.ini"
+    )
+
+    ansiblePlaybook(
+        playbook: 'ansible/deploy_app.yml',
+        inventory: "ansible/inventory/inventory_${env.toLowerCase()}.ini"
+    )
+}

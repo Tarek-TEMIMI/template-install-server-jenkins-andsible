@@ -1,6 +1,6 @@
 ---
 - name: Préparer le serveur
-  hosts: all
+  hosts: stage_dev
   become: true
 
   tasks:

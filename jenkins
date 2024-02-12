@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_REPO_URL = 'https://votre.url/vers/votre/depot.git'
-        GIT_CREDENTIALS = 'votre_identifiant_git'
-    }
+  
 
     stages {
         stage('Récupérer les fichiers Ansible') {
