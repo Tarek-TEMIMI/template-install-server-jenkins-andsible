@@ -16,18 +16,6 @@ pipeline {
             }
         }
 
-        stage('Préparer, Installer et Déployer - Test') {
-            steps {
-                preparerInstallerDeployer('Test')
-            }
-        }
-
-        stage('Préparer, Installer et Déployer - Prod') {
-            steps {
-                preparerInstallerDeployer('Prod')
-            }
-        }
-
         // Répétez les étapes pour d'autres environnements au besoin
     }
 }

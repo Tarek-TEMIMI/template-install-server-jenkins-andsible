@@ -1,6 +1,6 @@
 ---
 - name: Déployer l'application
-  hosts: all
+  hosts: stage_dev
   become: true
 
   tasks:

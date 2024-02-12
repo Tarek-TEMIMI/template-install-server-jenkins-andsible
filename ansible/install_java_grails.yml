@@ -1,6 +1,6 @@
 ---
 - name: Installer Java et Grails
-  hosts: all
+  hosts: stage_dev
   become: true
 
   tasks:
