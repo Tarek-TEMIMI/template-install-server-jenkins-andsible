@@ -1,6 +1,6 @@
 ---
 - name: Préparer le serveur
-  - hosts: all
+  - hosts: localhost
     gather_facts: true
     
   tasks:
