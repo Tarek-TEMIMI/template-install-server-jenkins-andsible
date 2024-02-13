@@ -1,11 +1,8 @@
 ---
 - name: Préparer le serveur
-  - hosts: serv_dev
+  - hosts: all
     gather_facts: true
-    vars:
-      ansible_ssh_user: "ubuntu"
-      ansible_ssh_host: "139.99.130.36"
-
+    
   tasks:
     - name: Installer Nginx
       apt:
