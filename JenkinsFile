@@ -31,8 +31,4 @@ def preparerInstallerDeployer(env) {
         inventory: "ansible/inventory/inventory_${env.toLowerCase()}.ini"
     )
 
-    ansiblePlaybook(
-        playbook: 'ansible/deploy_app.yml',
-        inventory: "ansible/inventory/inventory_${env.toLowerCase()}.ini"
-    )
 }
