@@ -4,11 +4,7 @@ pipeline {
   
 
     stages {
-        stage('Récupérer les fichiers Ansible') {
-            steps {
-                git branch: 'main', credentialsId: GIT_CREDENTIALS, url: GIT_REPO_URL
-            }
-        }
+      
 
         stage('Préparer, Installer et Déployer - Dev') {
             steps {
